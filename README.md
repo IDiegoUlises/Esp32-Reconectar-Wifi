@@ -84,6 +84,9 @@ void setup()
 
   //Funcion que se ejecutara siempre cuando no este conectado a una red WiFi
   WiFi.onEvent(WiFiDesconectado, SYSTEM_EVENT_STA_DISCONNECTED);
+
+  //Se conecta a la red Wifi
+  WiFi.begin(ssid, password);
 }
 
 void loop()
