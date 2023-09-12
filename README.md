@@ -47,40 +47,48 @@ void loop() {
 
 ```c++
 #include <WiFi.h>
-const char* ssid = "Your_SSID";
-const char* password = "Your_Password";
 
-void Wifi_connected(WiFiEvent_t event, WiFiEventInfo_t info){
-  Serial.println("Successfully connected to Access Point");
+//Credenciales WiFi
+const char* ssid = "Wifi";
+const char* password = "123456789";
+
+//Funcion que se ejecutara cuando se conecte a una red WiFi
+void WiFiConectado(WiFiEvent_t event, WiFiEventInfo_t info)
+{
+  Serial.println("Correctamente conectado al punto de acceso");
 }
 
-void Get_IPAddress(WiFiEvent_t event, WiFiEventInfo_t info){
-  Serial.println("WIFI is connected!");
-  Serial.println("IP address: ");
-  Serial.println(WiFi.localIP());
-}
-
-void Wifi_disconnected(WiFiEvent_t event, WiFiEventInfo_t info){
-  Serial.println("Disconnected from WIFI access point");
-  Serial.print("WiFi lost connection. Reason: ");
+//Funcion que se ejecutara siempre cuando no este conectado a una red WiFi
+void WiFiDesconectado(WiFiEvent_t event, WiFiEventInfo_t info)
+{
+  //Imprime cuando se pierda la conexion Wifi y la razon porque sucedio
+  Serial.println("Se ha perdido la conexion WiFi");
+  Serial.print("Por el motivo:");
   Serial.println(info.disconnected.reason);
-  Serial.println("Reconnecting...");
+  Serial.println("Reconectando...");
+  
+  //Recordar que no se recomienda agregar delay
+  //o tiempos de retardo a los eventos porque
+  //pueden que el evento no funcione correctamente
+
+  //Reconectar Wifi
   WiFi.begin(ssid, password);
 }
-
-void setup(){
+void setup()
+{
+  //Inicia el puerto serial
   Serial.begin(115200);
-  WiFi.disconnect(true);
-  delay(1000);
 
-  WiFi.onEvent(Wifi_connected,SYSTEM_EVENT_STA_CONNECTED);
-  WiFi.onEvent(Get_IPAddress, SYSTEM_EVENT_STA_GOT_IP);
-  WiFi.onEvent(Wifi_disconnected, SYSTEM_EVENT_STA_DISCONNECTED); 
-  WiFi.begin(ssid, password);
-  Serial.println("Waiting for WIFI network...");
+  //Funcion que se ejecutara cuando se conecte a una red WiFi
+  WiFi.onEvent(WiFiConectado, SYSTEM_EVENT_STA_CONNECTED);
+
+  //Funcion que se ejecutara siempre cuando no este conectado a una red WiFi
+  WiFi.onEvent(WiFiDesconectado, SYSTEM_EVENT_STA_DISCONNECTED);
 }
 
-void loop(){
+void loop()
+{
+  //En espera infinitamente
   delay(1000);
 }
 ```
