@@ -1,6 +1,6 @@
 # Esp32-Reconectar-Wifi
 
-### Codigo oringal que se le deben hacer modificaciones
+### Codigo original que se le deben hacer modificaciones
 ```c++
 #include <WiFi.h>
 
