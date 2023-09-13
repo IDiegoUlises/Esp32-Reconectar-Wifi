@@ -1,6 +1,4 @@
-# Esp32-Reconectar-Wifi
-
-### Codigo prometedor que utiliza eventos para reconectar el Wifi
+# Esp32 Reconectar Wifi
 
 ```c++
 #include <WiFi.h>
